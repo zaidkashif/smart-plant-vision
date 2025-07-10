@@ -41,20 +41,67 @@ I started by exploring the **Oxford Flowers 102** dataset and implemented a basi
 
 ---
 
-## 🧪 Training Summary
+ ## 🔨 Project Pipeline
 
-| Metric                | Value               |
-| --------------------- | ------------------- |
-| 📈 Final Accuracy     | ~71% (Validation)   |
-| 🔁 Top-5 Accuracy     | ~90%                |
-| 🧠 Total Parameters   | ~8 million          |
-| 🌸 Number of Classes  | 102                 |
-| 🖼️ Training Samples   | 6149                |
-| 🧪 Validation Samples | 1020                |
-| 🕐 Total Epochs       | 20                  |
-| 💾 Model File Size    | ~35 MB (.h5 format) |
+1. Preprocessing
+   Loaded .mat files for label and split information.
 
----
+Resized images to 224x224 and normalized pixel values.
+
+Created NumPy arrays: X_train, X_valid, X_test.
+
+2. Baseline Model: CNN from Scratch
+   3 Conv2D layers + BatchNorm + Dropout
+
+Poor generalization on validation data
+
+Served as baseline for comparison
+
+3. Transfer Learning with MobileNetV2
+   Loaded pretrained weights (imagenet)
+
+Added custom dense and softmax layers
+
+Initial training (frozen) followed by fine-tuning
+
+Achieved 71% validation accuracy after tuning
+
+4. Ensemble Feature Fusion (MobileNetV2 + ResNet50)
+   Extracted features from both models
+
+Concatenated embeddings before Dense layers
+
+Fine-tuned last 120 layers of both networks
+
+Used:
+
+CosineDecay scheduler
+
+Label Smoothing (CategoricalCrossentropy with label_smoothing=0.1)
+
+TopK Categorical Accuracy (Top-5)
+
+EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
+
+## 📊 Evaluation & Insights
+Plotted training/validation accuracy and loss
+
+Evaluated confusion matrix and classification report
+
+Misclassifications visualized
+
+Top-5 predictions displayed in the Streamlit UI
+
+Grad-CAM added for visual explanation
+
+🧠 Architecture: Feature Fusion
+Two branches: MobileNetV2 and ResNet50 (truncated after global_avg_pool)
+
+Features concatenated
+
+Dense → Dropout → Output layer
+
+Fine-tuned on top 120 layers of both models
 
 ## 📦 How to Run
 
@@ -68,25 +115,6 @@ Run the app:
 
 ```bash
 streamlit run app.py
-```
-
----
-
-## 📂 Project Structure
-
-```
-smart-plant-vision/
-├── app.py                # Streamlit app
-├── model/
-│   ├── ensemble_finetuned.h5
-│   └── labels.json
-├── utils/
-│   ├── gradcam_utils.py
-│   └── predict.py
-├── assets/
-│   └── demo_interface.png
-├── requirements.txt
-└── README.md
 ```
 
 ---
@@ -105,32 +133,5 @@ smart-plant-vision/
 Visualize **where** the model focuses while making predictions.
 
 ![Grad-CAM Demo](./assets/gradcam_sample.png)
-
----
-
-## 🌐 Future Enhancements
-
-- Add class-wise precision and recall
-- Real-time webcam predictions
-- Convert to a mobile app using TensorFlow Lite
-- Integrate IoT-based smart plant monitoring (Phase 2)
-
----
-
-## 🙌 Contributors
-
-**Dr. Adeel Ashraf Cheema**  
-Assistant Professor, FAST-NUCES  
-AI Researcher | Educator | Project Mentor  
-🌐 [LinkedIn Profile](https://www.linkedin.com/in/adeelcheema/)
-
----
-
-## 📢 Let's Connect
-
-If you’re a student, researcher, or developer exploring Deep Learning or Computer Vision, connect with me:
-
-📫 Email: adeelashrafcheema@fast.edu.pk  
-💬 LinkedIn: [Dr. Adeel Ashraf Cheema](https://www.linkedin.com/in/adeelcheema/)
 
 ---
