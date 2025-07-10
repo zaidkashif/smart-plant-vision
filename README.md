@@ -137,10 +137,3 @@ streamlit run app.py
 
 ---
 
-## 🔥 Grad-CAM Visualization
-
-Visualize **where** the model focuses while making predictions.
-
-![Grad-CAM Demo](./assets/gradcam_sample.png)
-
----
