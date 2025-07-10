@@ -1,3 +1,7 @@
 data
 main.py
-smart-plant-model_v1.h5
+smart_plant_model_v1
+ensemble_finetuned.h5
+fusion_mobilenet_resnet.h5
+mobilenetv2_best.h5
+mobilenetv2_finetuned.h5
