@@ -103,6 +103,15 @@ Dense → Dropout → Output layer
 
 Fine-tuned on top 120 layers of both models
 
+## Comparison table
+
+| Model                             | Training Time | Params (M) | Accuracy | Top-5 Accuracy |
+| --------------------------------- | ------------- | ---------- | -------- | -------------- |
+| CNN Scratch                       | Fast          | \~1M       | 52%      | -              |
+| MobileNetV2                       | Medium        | 3.5M       | 71%      | 91%            |
+| Ensemble (MobileNetV2 + ResNet50) | Higher        | 11M        | **85%**  | **97%**        |
+
+
 ## 📦 How to Run
 
 Install dependencies:
